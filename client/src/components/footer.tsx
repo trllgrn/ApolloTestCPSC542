@@ -10,7 +10,7 @@ import { colors, unit } from '../styles';
 
 export default function Footer() {
   return (
-    <Container>
+    <Container> 
       <InnerContainer>
         <MenuItem to="/">
           <HomeIcon />
@@ -42,6 +42,7 @@ const Container = styled('footer')({
   position: 'sticky',
   bottom: 0,
 });
+Container.displayName = "Container"
 
 const InnerContainer = styled('div')({
   display: 'flex',
@@ -50,3 +51,6 @@ const InnerContainer = styled('div')({
   padding: unit * 2.5,
   margin: '0 auto',
 });
+
+
+InnerContainer.displayName= "InnerContainer";
