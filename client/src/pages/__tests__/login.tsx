@@ -42,13 +42,23 @@ describe('Login Page', () => {
 
     const wrapper = mount(<MockedProvider mocks= {mocks} cache = {cache}><Login /></MockedProvider>);
     //enter email address
-
-    wrapper.find('[data-testid="login-input"]').hostNodes().getDOMNode().nodeValue = 'a@a.a';
-    wrapper.find('[data-testid="login-input"]').hostNodes().simulate('change');
     await act( async () => {
-      wrapper.find('button').simulate('click');
+      wrapper.find('input').invoke('onChange');// = 'a@a.a';
+      wrapper.find('[data-testid="login-input"]').hostNodes().simulate('change');
+      //wrapper.find('input').simulate('change', { target: { value: 'a@a.a'}});
+      await new Promise(resolve => setTimeout(resolve, 10));
     });
     wrapper.update();
+    // wrapper.find('[data-testid="login-input"]').hostNodes().getDOMNode().nodeValue = 'a@a.a';
+    // wrapper.find('[data-testid="login-input"]').hostNodes().simulate('change');
+    // await act( async () => {
+    //   wrapper.find('button').simulate('click');
+    // });
+    //await new Promise(resolve => setTimeout(resolve, 10));
+    //wrapper.update();
+    console.log(wrapper.debug());
+    //expect(wrapper.find('input').prop('value')).toBe('a@a.a');
+    
     // const {getByText, getByTestId} = await renderApollo(<Login />, {
     //   mocks,
     //   cache,
