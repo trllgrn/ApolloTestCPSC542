@@ -6,8 +6,6 @@ import {
   waitForElement,
 } from '../../test-utils';
 import Profile, { GET_MY_TRIPS } from '../profile';
-import { shallow, mount, render } from 'enzyme';
-import { MockedProvider } from '@apollo/client/testing';
 
 const mockLaunch = {
   __typename: 'Launch',
@@ -45,11 +43,9 @@ describe('Profile Page', () => {
       },
     ];
 
-    //const { getByText } = renderApollo(<Profile />, { mocks });
+    const { getByText } = renderApollo(<Profile />, { mocks });
 
     // if the profile renders, it will have the list of missions booked
-    //await waitForElement(() => getByText(/test mission/i));
-    const wrapper = mount(<MockedProvider mocks={mocks}><Profile /></MockedProvider>);
-    expect(wrapper.find({children : 'test mission'})).toBeDefined();
+    await waitForElement(() => getByText(/test mission/i));
   });
 });
