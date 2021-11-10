@@ -1,10 +1,11 @@
 import React from 'react';
+import { shallow } from 'enzyme';
+import { MockedProvider } from '@apollo/client/testing'
 
 import {
-  renderApollo,
   cleanup,
-  waitForElement,
 } from '../../test-utils';
+
 import CartItem, { GET_LAUNCH } from '../cart-item';
 
 const mockLaunch = {
@@ -32,35 +33,27 @@ describe('cart item', () => {
         result: { data: { launch: mockLaunch } },
       },
     ];
-
-    // since we know the name of the mission, and know that name
-    // will be rendered at some point, we can use getByText
-    const { getByText } = renderApollo(<CartItem launchId={'1'} />, {
-      mocks,
-      addTypename: false,
-    });
-
-    // check the loading state
-    getByText(/loading/i);
-
-    return waitForElement(() => getByText(/test mission/i));
+    const wrapper = shallow(
+      <MockedProvider mocks={mocks} addTypename={false}>
+          <CartItem launchId={'1'} />
+      </MockedProvider>
+      )
+    wrapper.find('loading')
+    expect(wrapper.find('test mission')).toBeTruthy();
   });
 
   it('renders with error state', () => {
     let mocks = [
       {
         request: { query: GET_LAUNCH, variables: { launchId: 1 } },
-        error: new Error('aw shucks'),
+        error: new Error('errorerror'),
       },
     ];
-
-    // since we know the error message, we can use getByText
-    // to recognize the error
-    const { getByText } = renderApollo(<CartItem launchId={'1'} />, {
-      mocks,
-      addTypename: false,
-    });
-
-    waitForElement(() => getByText(/error: aw shucks/i));
+    const wrapper = shallow(
+      <MockedProvider mocks={mocks} addTypename={false}>
+          <CartItem launchId={'1'} />
+      </MockedProvider>
+      )
+    expect(wrapper.find('errorerror')).toBeTruthy();
   });
 });

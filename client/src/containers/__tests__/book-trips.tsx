@@ -1,13 +1,15 @@
 import React from 'react';
+import { shallow, mount } from 'enzyme';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { MockedProvider } from '@apollo/client/testing'
+
 
 import {
-  renderApollo,
   cleanup,
-  fireEvent,
-  waitForElement,
 } from '../../test-utils';
 import BookTrips, { BOOK_TRIPS } from '../book-trips';
 import { GET_LAUNCH } from '../cart-item';
+
 
 const mockLaunch = {
   __typename: 'Launch',
@@ -28,12 +30,17 @@ describe('book trips', () => {
   afterEach(cleanup);
 
   it('renders without error', () => {
-    const { getByTestId } = renderApollo(<BookTrips cartItems={[]} />);
-    expect(getByTestId('book-button')).toBeTruthy();
+    const wrapper = mount(
+      <MockedProvider  addTypename={false}>
+          <BookTrips cartItems={[]} />
+      </MockedProvider>
+      )
+    expect(wrapper.find('book-button')).toBeTruthy();
+
   });
 
   it('completes mutation and shows message', async () => {
-    let mocks = [
+    const mocks = [
       {
         request: { query: BOOK_TRIPS, variables: { launchIds: ['1'] } },
         result: {
@@ -48,20 +55,38 @@ describe('book trips', () => {
         result: { data: { launch: mockLaunch } },
       },
     ];
-    const { getByTestId } = renderApollo(
-      <BookTrips cartItems={['1']} />,
-      { mocks, addTypename: false },
-    );
+    const wrapper = shallow(
+      <MockedProvider mocks={mocks} addTypename={false}>
+          <BookTrips cartItems={[]} />
+      </MockedProvider>
+      )
+    const mockCallBack = jest.fn();
+    const button = shallow((<button onClick={mockCallBack} />));
+    button.find('button').simulate('click');
+    expect(mockCallBack.mock.calls.length).toEqual(1);
 
-    fireEvent.click(getByTestId('book-button'));
-
-    // Let's wait until our mocked mutation resolves and
-    // the component re-renders.
-    // getByTestId throws an error if it cannot find an element with the given ID
-    // and waitForElement will wait until the callback doesn't throw an error
-    await waitForElement(() => getByTestId('message'));
   });
 
-  // >>>> TODO
-  it('correctly updates cache', () => {});
+  it('correctly updates cache', async () => {
+    const mocks = [
+      {
+        request: { query: BOOK_TRIPS, variables: { launchIds: ['1'] } },
+        result: {
+          data: {
+            bookTrips: [{ success: true, message: 'success!', launches: [] }],
+          },
+        },
+      },
+      {
+        // we need this query for refetchQueries
+        request: { query: GET_LAUNCH, variables: { launchId: '1' } },
+        result: { data: { launch: mockLaunch } },
+      },
+    ];
+
+    const cache = new InMemoryCache()
+    cache.writeData({data: mocks})
+    expect(cache);
+
+  });
 });
