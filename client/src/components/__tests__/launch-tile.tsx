@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render } from 'enzyme';
+import { shallow } from 'enzyme';
 import LaunchTile from '../launch-tile';
 
 describe('Launch Tile', () => {
@@ -8,7 +8,7 @@ describe('Launch Tile', () => {
   //afterEach(cleanup);
 
   it('renders without error', () => {
-    render(
+    shallow(
       <LaunchTile
         launch={{
           __typename: 'Launch',

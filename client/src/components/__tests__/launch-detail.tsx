@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render } from 'enzyme';
+import { shallow } from 'enzyme';
 import LaunchDetail from '../launch-detail';
 
 describe('Launch Detail View', () => {
@@ -8,7 +8,7 @@ describe('Launch Detail View', () => {
   //afterEach(cleanup);
 
   it('renders without error', () => {
-    render(
+    shallow(
       <LaunchDetail
         id={'1'}
         site={'earth'}
