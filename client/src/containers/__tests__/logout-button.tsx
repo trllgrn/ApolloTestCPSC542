@@ -1,8 +1,9 @@
 import React from 'react';
 import LogoutButton from '../logout-button';
 
-import { shallow, render } from 'enzyme'
+import { shallow, render, mount } from 'enzyme'
 import { renderApollo, cleanup, fireEvent } from '../../test-utils';
+import { MockedProvider } from '@apollo/client/testing';
 import { cache, isLoggedInVar } from '../../cache';
 
 describe('logout button', () => {
@@ -10,9 +11,12 @@ describe('logout button', () => {
   //afterEach(cleanup);
   
   it('renders logout button', async () => {
-    shallow(<LogoutButton />);
+    const wrapper = render(
+      <MockedProvider  addTypename={false}>
+          <LogoutButton />
+      </MockedProvider>
+      );
   });
-  
   
   it('complete logout', async () => {
     isLoggedInVar(true);
@@ -21,8 +25,19 @@ describe('logout button', () => {
     //const { getByTestId } = render(<LogoutButton />, { cache });
     //fireEvent.click(getByTestId('logout-button'));
 
-    const button = shallow((<LogoutButton />));
-    button.find('button').simulate('click');
+    
+    const wrapper = render(
+      <MockedProvider  addTypename={false}>
+          <LogoutButton />
+      </MockedProvider>
+      );
+    wrapper.find('StyledButton').prop('onClick')()
+    
+    
+    /*
+    const mockCallBack = jest.fn();
+    const button = shallow((<LogoutButton onClick={mockCallBack}></LogoutButton>))
+    */
 
     expect(isLoggedInVar()).toBeFalsy();
     expect(localStorage.getItem('token')).toBeNull();
