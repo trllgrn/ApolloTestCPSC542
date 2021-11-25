@@ -63,6 +63,7 @@ const Launches: React.FC<LaunchesProps> = () => {
         isLoadingMore
           ? <Loading />
           : <Button
+              id="loadMoreButton"
               onClick={async () => {
                 setIsLoadingMore(true);
                 await fetchMore({

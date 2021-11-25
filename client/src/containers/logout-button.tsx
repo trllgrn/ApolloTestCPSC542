@@ -11,6 +11,7 @@ const LogoutButton = () => {
   return (
     <StyledButton
       data-testid="logout-button"
+      id="footerLogout"
       onClick={() => {
         // Since we're logging out, remove all traces of the current user
         // from the cache. First use `cache.evict()` to remove the stored
