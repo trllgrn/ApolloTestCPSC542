@@ -60,6 +60,7 @@ const CancelTripButton: React.FC<ActionButtonProps> = ({ id }) => {
   return (
     <div>
       <Button
+        id="cancelTripButton"
         onClick={() => mutate()}
         data-testid={'action-button'}
       >
