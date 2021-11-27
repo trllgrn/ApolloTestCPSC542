@@ -1,10 +1,10 @@
-import styled from 'react-emotion';
+import styled from '@emotion/styled'
 import { lighten } from 'polished';
 
 import { unit, colors } from '../styles';
 
 const height = 50;
-export default styled('button')({
+  const Button = styled.button({
   display: 'block',
   minWidth: 200,
   height,
@@ -28,3 +28,5 @@ export default styled('button')({
     backgroundColor: lighten(0.2, colors.accent),
   },
 });
+
+export default Button
