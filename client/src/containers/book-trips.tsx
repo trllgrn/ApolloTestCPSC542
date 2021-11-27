@@ -36,6 +36,7 @@ const BookTrips: React.FC<BookTripsProps> = ({ cartItems }) => {
     ? <p data-testid="message">{data.bookTrips.message}</p>
     : (
       <Button
+        id="bookAllButton"
         onClick={async () => {
           await bookTrips();
           cartItemsVar([]);

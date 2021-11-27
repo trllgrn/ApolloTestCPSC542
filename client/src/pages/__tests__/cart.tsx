@@ -1,13 +1,13 @@
 import React from 'react';
 
 import {
-  renderApollo,
-  cleanup,
-  waitForElement,
+    cleanup
 } from '../../test-utils';
 import Cart from '../cart';
 import { GET_LAUNCH } from '../../containers/cart-item';
 import { cache, cartItemsVar } from '../../cache';
+import { shallow, mount, render } from 'enzyme';
+import { MockedProvider } from '@apollo/client/testing';
 
 const mockLaunch = {
   __typename: 'Launch',
@@ -23,13 +23,14 @@ const mockLaunch = {
   },
 };
 
-describe('Cart Page', () => {
+describe('Cart Page Suite', () => {
   // automatically unmount and cleanup DOM after the test is finished.
   afterEach(cleanup);
 
   it('renders with message for empty carts', () => {
-    const { getByTestId } = renderApollo(<Cart />, { cache });
-    return waitForElement(() => getByTestId('empty-message'));
+    const wrapper = mount(<MockedProvider cache={cache}><Cart /></MockedProvider>);
+    expect(wrapper.find('[data-testid="empty-message"]')).toBeDefined();
+    expect(wrapper.contains('No items in your cart')).toBeTruthy();
   });
 
   it('renders cart', () => {
@@ -39,9 +40,9 @@ describe('Cart Page', () => {
         result: { data: { launch: mockLaunch } },
       },
     ];
-
-    const { getByTestId } = renderApollo(<Cart />, { cache, mocks });
     cartItemsVar(['1']);
-    return waitForElement(() => getByTestId('book-button'));
+    const wrapper = mount(<MockedProvider mocks={mocks} cache={cache}><Cart /></MockedProvider>);
+    expect(wrapper.find('book-button')).toBeDefined();
+    expect(wrapper.contains('Book All')).toBeTruthy();
   });
 });
