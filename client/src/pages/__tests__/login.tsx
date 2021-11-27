@@ -16,63 +16,15 @@ import { LoginForm } from '../../components';
 describe('Login Page', () => {
   // automatically unmount and cleanup DOM after the test is finished.
   afterEach(cleanup);
+  it('renders the login page with email input', () => {
+    const wrapper = mount(<MockedProvider><Login /></MockedProvider>);
+    let emailInput = wrapper.find('[data-testid="login-input"]').hostNodes();
+    expect(emailInput.prop('placeholder')).toBe('Email');
+  });
 
-  it('renders login page', async () => {
+  it('renders the login page with log in button', async () => {
     const wrapper = mount(<MockedProvider><Login /></MockedProvider>);
     expect(wrapper.find('button')).toBeDefined();
     expect(wrapper.contains([<button type="submit" className="css-wwcn44">Log in</button>])).toBeTruthy();
-  });
-
-  it('fires login mutation and updates cache after done', async () => {
-    expect(isLoggedInVar()).toBeFalsy();
-
-    const mocks = [
-      {
-        request: {query: LOGIN_USER, variables: {email: 'a@a.a'}},
-        result: {
-          data: {
-            login: {
-              id: 'abc123',
-              token: 'def456',
-            },
-          },
-        },
-      },
-    ];
-
-    const wrapper = mount(<MockedProvider mocks= {mocks} cache = {cache}><Login /></MockedProvider>);
-    //enter email address
-    await act( async () => {
-      wrapper.find('input').invoke('onChange');// = 'a@a.a';
-      wrapper.find('[data-testid="login-input"]').hostNodes().simulate('change');
-      //wrapper.find('input').simulate('change', { target: { value: 'a@a.a'}});
-      await new Promise(resolve => setTimeout(resolve, 10));
-    });
-    wrapper.update();
-    // wrapper.find('[data-testid="login-input"]').hostNodes().getDOMNode().nodeValue = 'a@a.a';
-    // wrapper.find('[data-testid="login-input"]').hostNodes().simulate('change');
-    // await act( async () => {
-    //   wrapper.find('button').simulate('click');
-    // });
-    //await new Promise(resolve => setTimeout(resolve, 10));
-    //wrapper.update();
-    console.log(wrapper.debug());
-    //expect(wrapper.find('input').prop('value')).toBe('a@a.a');
-    
-    // const {getByText, getByTestId} = await renderApollo(<Login />, {
-    //   mocks,
-    //   cache,
-    // });
-
-    // fireEvent.change(getByTestId('login-input'), {
-    //   target: {value: 'a@a.a'},
-    // });
-
-    // fireEvent.click(getByText(/log in/i));
-
-    // // login is done if loader is gone
-    // await waitForElement(() => getByText(/log in/i));
-
-    //expect(isLoggedInVar()).toBeTruthy();
   });
 });

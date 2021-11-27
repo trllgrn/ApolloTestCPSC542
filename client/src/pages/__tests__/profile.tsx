@@ -8,6 +8,7 @@ import {
 import Profile, { GET_MY_TRIPS } from '../profile';
 import { shallow, mount, render } from 'enzyme';
 import { MockedProvider } from '@apollo/client/testing';
+import { act } from '@testing-library/react';
 
 const mockLaunch = {
   __typename: 'Launch',
@@ -44,12 +45,12 @@ describe('Profile Page', () => {
         result: { data: { me: mockMe } },
       },
     ];
-
-    //const { getByText } = renderApollo(<Profile />, { mocks });
-
-    // if the profile renders, it will have the list of missions booked
-    //await waitForElement(() => getByText(/test mission/i));
     const wrapper = mount(<MockedProvider mocks={mocks}><Profile /></MockedProvider>);
-    expect(wrapper.find({children : 'test mission'})).toBeDefined();
+    await act( async () => {  
+      await new Promise(resolve => setTimeout(resolve, 0));
+      wrapper.update();
+    });
+    let missionName = wrapper.find({children: 'test mission'});
+    expect(missionName.text()).toMatch('test mission');
   });
 });
