@@ -22,23 +22,32 @@ describe('logout button', () => {
     isLoggedInVar(true);
     localStorage.setItem('token', 'testTokenValue');
     localStorage.setItem('userId', 'abc123');
-    //const { getByTestId } = render(<LogoutButton />, { cache });
-    //fireEvent.click(getByTestId('logout-button'));
 
-    
+    const mockCallBack = jest.fn();
+    const button = shallow((<button onClick={mockCallBack} />));
+    button.find('button').simulate('click');
+    expect(mockCallBack.mock.calls.length).toEqual(1);
+
+    /*
+    const { getByTestId } = render(<LogoutButton />, { cache });
+    fireEvent.click(getByTestId('logout-button'));
+    */
+
+    /*
     const wrapper = render(
       <MockedProvider  addTypename={false}>
           <LogoutButton />
       </MockedProvider>
       );
     wrapper.find('StyledButton').prop('onClick')()
-    
+    */
+
     
     /*
     const mockCallBack = jest.fn();
     const button = shallow((<LogoutButton onClick={mockCallBack}></LogoutButton>))
     */
-
+   
     expect(isLoggedInVar()).toBeFalsy();
     expect(localStorage.getItem('token')).toBeNull();
     expect(localStorage.getItem('userId')).toBeNull();
