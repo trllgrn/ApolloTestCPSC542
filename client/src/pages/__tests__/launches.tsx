@@ -7,6 +7,9 @@ import {
   waitForElement,
 } from '../../test-utils';
 import Launches, { GET_LAUNCHES } from '../launches';
+import { shallow, mount, render } from 'enzyme';
+import { MockedProvider } from '@apollo/client/testing';
+import { act } from '@testing-library/react';
 
 const mockLaunch = {
   __typename: 'Launch',
@@ -48,10 +51,17 @@ describe('Launches Page', () => {
         },
       },
     ];
-    const { getByText } = await renderApollo(<Launches />, {
-      mocks,
-      cache,
-    });
-    await waitForElement(() => getByText(/test mission/i));
+    const wrapper = mount(<MockedProvider mocks={mocks}><Launches /></MockedProvider>);
+      await act(async () => {
+          await new Promise(resolve => setTimeout(resolve, 0));
+          wrapper.update();
+      });
+      let missionName = wrapper.find({ children: 'test mission' });
+      expect(missionName.text()).toMatch('test mission');
+    //const { getByText } = await renderApollo(<Launches />, {
+    //  mocks,
+    //  cache,
+    //});
+    //await waitForElement(() => getByText(/test mission/i));
   });
 });
