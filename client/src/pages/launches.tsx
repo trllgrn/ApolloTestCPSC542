@@ -4,7 +4,7 @@ import { gql, useQuery } from '@apollo/client';
 import { LaunchTile, Header, Button, Loading } from '../components';
 import { RouteComponentProps } from '@reach/router';
 import * as GetLaunchListTypes from './__generated__/GetLaunchList';
-
+// Randall's
 export const LAUNCH_TILE_DATA = gql`
   fragment LaunchTile on Launch {
     __typename

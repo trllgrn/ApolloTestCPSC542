@@ -5,7 +5,7 @@ import ActionButton from '../action-button';
 import { cartItemsVar } from '../../cache';
 
 describe('action button', () => {
-  // automatically unmount and cleanup DOM after the test is finished.
+  // automatically unmount and cleanup DOM after the test is finished.  Randall's
   afterEach(cleanup);
 
   it('renders without error', () => {
