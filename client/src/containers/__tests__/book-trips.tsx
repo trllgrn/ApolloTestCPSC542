@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { MockedProvider } from '@apollo/client/testing'
 
