@@ -62,7 +62,7 @@ describe('book trips', () => {
       </MockedProvider>
       )
     const button = wrapper.find(Button).simulate("click");
-    expect(button.length).toEqual(1);
+    expect(wrapper.find("success")).toBeTruthy();
 
   });
 
