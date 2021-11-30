@@ -12,15 +12,15 @@ export default function Footer() {
   return (
     <Container> 
       <InnerContainer>
-        <MenuItem to="/">
+        <MenuItem to="/" id="footerHome">
           <HomeIcon />
           Home
         </MenuItem>
-        <MenuItem to="/cart">
+        <MenuItem to="/cart" id="footerCart">
           <CartIcon />
           Cart
         </MenuItem>
-        <MenuItem to="/profile">
+        <MenuItem to="/profile" id="footerProfile">
           <ProfileIcon />
           Profile
         </MenuItem>

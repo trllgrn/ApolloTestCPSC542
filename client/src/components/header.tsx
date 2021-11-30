@@ -31,8 +31,8 @@ const Header: React.FC<HeaderProps> = ({ image, children = 'Space Explorer' }) =
     <Container>
       <Image round={!image} src={avatar} alt="Space dog" />
       <div>
-        <h2>{children}</h2>
-        <Subheading>{email}</Subheading>
+        <h2 id="appBannerName">{children}</h2>
+        <Subheading id="profileEmail">{email}</Subheading>
       </div>
     </Container>
   );
