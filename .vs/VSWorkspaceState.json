@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\client",
+    "\\client\\src",
+    "\\client\\src\\containers",
+    "\\client\\src\\containers\\__generated__",
+    "\\client\\src\\containers\\__tests__",
+    "\\client\\src\\pages",
+    "\\client\\src\\pages\\__generated__",
+    "\\client\\src\\pages\\__tests__",
+    "\\server"
+  ],
+  "SelectedNode": "\\client\\src\\setupTests.js",
+  "PreviewInSolutionExplorer": false
+}

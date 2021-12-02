@@ -34,3 +34,5 @@ const renderApollo = (
 
 export * from '@testing-library/react';
 export { renderApollo };
+export { cleanup }
+export { waitForElement }

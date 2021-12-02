@@ -1,15 +1,11 @@
 import React from 'react';
-
 import {
-  renderApollo,
-  cleanup,
-  waitForElement,
+  renderApollo, cleanup, waitForElement,
 } from '../../test-utils';
 import Launch, { GET_LAUNCH_DETAILS } from '../launch';
 import { shallow, mount, render } from 'enzyme';
 import { MockedProvider } from '@apollo/client/testing';
 import { act } from '@testing-library/react';
-
 const mockLaunch = {
   __typename: 'Launch',
   id: 1,
@@ -29,11 +25,9 @@ const mockLaunch = {
   site: 'earth',
   isInCart: false,
 };
-
 describe('Launch Page', () => {
   // automatically unmount and cleanup DOM after the test is finished.
   afterEach(cleanup);
-
   it('renders launch', async () => {
     const mocks = [
       {

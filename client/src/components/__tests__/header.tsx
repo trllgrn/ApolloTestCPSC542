@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render, cleanup } from '../../test-utils';
+import { renderApollo, cleanup } from '../../test-utils';
 import Header from '../header';
 
 import { MenuItem } from '..';

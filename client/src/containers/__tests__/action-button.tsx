@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { renderApollo, cleanup } from '../../test-utils';
 import ActionButton from '../action-button';
 import { cartItemsVar } from '../../cache';
