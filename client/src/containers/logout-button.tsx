@@ -7,7 +7,7 @@ import { isLoggedInVar } from '../cache';
 import { ReactComponent as ExitIcon } from '../assets/icons/exit.svg';
 
 const LogoutButton = () => {
-  const client = useApolloClient();
+  //const client = useApolloClient();
   return (
     <StyledButton
       data-testid="logout-button"
@@ -19,8 +19,8 @@ const LogoutButton = () => {
         // query in `profile.tsx`. Then trigger garbage collection using
         // `cache.gc()` to remove the cached `User` object that is no longer
         // reachable.
-        client.cache.evict({ fieldName: 'me' });
-        client.cache.gc();
+        //client.cache.evict({ fieldName: 'me' });
+        //client.cache.gc();
 
         // Remove user details from localStorage.
         localStorage.removeItem('token');
