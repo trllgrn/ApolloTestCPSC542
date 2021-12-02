@@ -17,7 +17,9 @@ describe('selenium add items to cart test', ()=> {
         await driver.quit();
     });
 
-    it('Starts the browser & logs in', async ()=>{
+    
+
+    it('Add Crew-1 trip to cart', async () => {
         // Navigate to Url
         //await new Promise(resolve => setTimeout(resolve, 2000));
         await driver.get(testUrl);
@@ -31,9 +33,6 @@ describe('selenium add items to cart test', ()=> {
         await driver.findElement(By.name('email')).sendKeys('tester@mail.com', Key.ENTER);
         expect(location).toContain('localhost');
         driver.navigate().refresh();
-    });
-
-    it('Add Crew-1 trip to cart', async () => {
         await driver.navigate().refresh();
 
         //Locate button containing trip name in title
