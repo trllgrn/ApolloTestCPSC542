@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { MockedProvider } from '@apollo/client/testing'
 
@@ -9,6 +9,7 @@ import {
 } from '../../test-utils';
 import BookTrips, { BOOK_TRIPS } from '../book-trips';
 import { GET_LAUNCH } from '../cart-item';
+import { Button } from '../../components';
 
 
 const mockLaunch = {
@@ -55,15 +56,13 @@ describe('book trips', () => {
         result: { data: { launch: mockLaunch } },
       },
     ];
-    const wrapper = shallow(
+    const wrapper = mount(
       <MockedProvider mocks={mocks} addTypename={false}>
           <BookTrips cartItems={[]} />
       </MockedProvider>
       )
-    const mockCallBack = jest.fn();
-    const button = shallow((<button onClick={mockCallBack} />));
-    button.find('button').simulate('click');
-    expect(mockCallBack.mock.calls.length).toEqual(1);
+    const button = wrapper.find(Button).simulate("click");
+    expect(wrapper.find("success")).toBeTruthy();
 
   });
 
