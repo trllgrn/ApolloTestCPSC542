@@ -1,30 +1,36 @@
 import React from 'react';
-
-import { renderApollo, cleanup } from '../../test-utils';
+import { cleanup } from '../../test-utils';
+import { shallow } from 'enzyme'
 import ActionButton from '../action-button';
 import { cartItemsVar } from '../../cache';
+import { MockedProvider } from '@apollo/client/testing';
+import { act } from '@testing-library/react';
 
 describe('action button', () => {
   // automatically unmount and cleanup DOM after the test is finished.
   afterEach(cleanup);
 
   it('renders without error', () => {
-    const { getByTestId } = renderApollo(<ActionButton />);
-    expect(getByTestId('action-button')).toBeTruthy();
+    const wrapper = shallow(<ActionButton />);
+    let actionButton = wrapper.find('[data-testid="action-button"]').hostNodes();
+    expect(actionButton).toBeDefined();
   });
 
-  it('shows correct label', () => {
-    const { getByText, container } = renderApollo(<ActionButton />);
-    getByText(/add to cart/i);
+  it('renders with the correct label', () => {
+    const addWrapper = shallow(<ActionButton />);
+    let actionButton = addWrapper.find({children: 'Add to Cart'});
+    expect(actionButton).toBeDefined();
 
-    // rerender with different props to same container
+    // render as Remove Button
     cartItemsVar(['1']);
-    renderApollo(<ActionButton id="1" />, { container });
-    getByText(/remove from cart/i);
+    const removeWrapper = shallow(<MockedProvider><ActionButton id="1"/></MockedProvider>);
+    let removeButton = removeWrapper.find({children: 'Remove from Cart'});
+    expect(removeButton).toBeDefined();
+    
+    // render as Cancel Button
     cartItemsVar([]);
-
-    // rerender with different props to same container
-    renderApollo(<ActionButton isBooked={true} />, { container });
-    getByText(/cancel this trip/i);
+    const cancelWrapper = shallow(<MockedProvider><ActionButton isBooked={true}/></MockedProvider>);
+    let cancelButton = cancelWrapper.find({children: 'cancel this trip'});
+    expect(cancelButton).toBeDefined();
   });
 });
