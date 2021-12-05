@@ -1,9 +1,9 @@
 import React from 'react';
+import { mount } from 'enzyme';
+import { MockedProvider } from '@apollo/client/testing'
 
 import {
-  renderApollo,
   cleanup,
-  waitForElement,
 } from '../../test-utils';
 import Launch, { GET_LAUNCH_DETAILS } from '../launch';
 
@@ -38,10 +38,11 @@ describe('Launch Page', () => {
         result: { data: { launch: mockLaunch } },
       },
     ];
-    const { getByText } = await renderApollo(<Launch launchId={1} />, {
-      mocks,
-      resolvers: {}
-    });
-    await waitForElement(() => getByText(/test mission/i));
+    const wrapper = mount(
+      <MockedProvider  mocks={mocks} addTypename={false}>
+          <Launch launchId={1} />
+      </MockedProvider>
+      )
+    expect(wrapper.find("test mission")).toBeTruthy();
   });
 });

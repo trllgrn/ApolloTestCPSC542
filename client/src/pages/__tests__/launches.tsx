@@ -1,10 +1,10 @@
 import React from 'react';
 import { InMemoryCache } from '@apollo/client';
+import { mount } from 'enzyme';
+import { MockedProvider } from '@apollo/client/testing'
 
 import {
-  renderApollo,
   cleanup,
-  waitForElement,
 } from '../../test-utils';
 import Launches, { GET_LAUNCHES } from '../launches';
 
@@ -48,10 +48,11 @@ describe('Launches Page', () => {
         },
       },
     ];
-    const { getByText } = await renderApollo(<Launches />, {
-      mocks,
-      cache,
-    });
-    await waitForElement(() => getByText(/test mission/i));
+    const wrapper = mount(
+      <MockedProvider  mocks={mocks} cache={cache} addTypename={false}>
+          <Launches />
+      </MockedProvider>
+      )
+      expect(wrapper.find("test mission")).toBeTruthy();
   });
 });

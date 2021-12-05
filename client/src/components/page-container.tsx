@@ -22,6 +22,9 @@ const Bar = styled('div')({
   backgroundColor: colors.primary,
 });
 
+Bar.displayName='Bar';
+
+
 const Container = styled('div')({
   display: 'flex',
   flexDirection: 'column',
@@ -32,3 +35,5 @@ const Container = styled('div')({
   padding: unit * 3,
   paddingBottom: unit * 5,
 });
+
+Container.displayName='Container';

@@ -1,13 +1,18 @@
-import React from 'react';
+import React from "react";
+import { shallow } from "enzyme";
+import Button from "../button";
+import { matchers } from "@emotion/jest";
 
-import { render, cleanup } from '../../test-utils';
-import Button from '../button';
+expect.extend(matchers);
 
-describe('Button', () => {
-  // automatically unmount and cleanup DOM after the test is finished.
-  afterEach(cleanup);
+describe("button", () => {
+  test("it rendere right css", () => {
+    const wrapper = shallow(<Button />);
 
-  it('renders without error', () => {
-    render(<Button>Hello World</Button>);
+    expect(wrapper).toHaveStyleRule("display", "block");
+    expect(wrapper).toHaveStyleRule("color", "white");
+    expect(wrapper).toHaveStyleRule("cursor", "pointer");
+
+    console.log(wrapper.debug());
   });
 });
