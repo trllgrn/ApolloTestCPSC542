@@ -1,6 +1,14 @@
 import React from 'react';
+<<<<<<< HEAD
 import {
   renderApollo, cleanup, waitForElement,
+=======
+import { mount } from 'enzyme';
+import { MockedProvider } from '@apollo/client/testing'
+
+import {
+  cleanup,
+>>>>>>> f800897dda71a3573e4d206e2652fdb1a5a1b49d
 } from '../../test-utils';
 import Launch, { GET_LAUNCH_DETAILS } from '../launch';
 import { shallow, mount, render } from 'enzyme';
@@ -35,11 +43,11 @@ describe('Launch Page', () => {
         result: { data: { launch: mockLaunch } },
       },
     ];
-    const wrapper = mount(<MockedProvider mocks={mocks}><Launch /></MockedProvider>);
-      await act(async () => {
-          await new Promise(resolve => setTimeout(resolve, 0));
-          wrapper.update();
-      });
-      expect(wrapper.find({ children: 'test mission' })).toBeTruthy();
+    const wrapper = mount(
+      <MockedProvider  mocks={mocks} addTypename={false}>
+          <Launch launchId={1} />
+      </MockedProvider>
+      )
+    expect(wrapper.find("test mission")).toBeTruthy();
   });
 });
