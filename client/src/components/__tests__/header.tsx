@@ -1,13 +1,22 @@
 import React from 'react';
 
-import { render, cleanup } from '../../test-utils';
+import { cleanup } from '../../test-utils';
 import Header from '../header';
 
-describe('Header', () => {
+import { MenuItem } from '..';
+import { shallow } from 'enzyme';
+
+MenuItem.displayName = "MenuItem"
+
+describe("Renders the Header", () => {
   // automatically unmount and cleanup DOM after the test is finished.
   afterEach(cleanup);
 
-  it('renders without error', () => {
-    render(<Header />);
+  it("Renders user title and user email", () => {
+    const wrapper = shallow(<Header />);
+    let userTitle = wrapper.find({children: 'Space Explorer'});
+    expect(userTitle).toBeDefined();
+    let userEmail = wrapper.find('[id="profileEmail"]');
+    expect(userEmail).toBeDefined();
   });
 });
