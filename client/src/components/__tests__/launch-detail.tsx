@@ -1,14 +1,14 @@
 import React from 'react';
 
-import { shallow } from 'enzyme';
+import { render, cleanup } from '../../test-utils';
 import LaunchDetail from '../launch-detail';
 
 describe('Launch Detail View', () => {
   // automatically unmount and cleanup DOM after the test is finished.
-  //afterEach(cleanup);
+  afterEach(cleanup);
 
   it('renders without error', () => {
-    shallow(
+    render(
       <LaunchDetail
         id={'1'}
         site={'earth'}

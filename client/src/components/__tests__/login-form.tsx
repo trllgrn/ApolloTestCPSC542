@@ -1,17 +1,13 @@
 import React from 'react';
-import { shallow, ReactWrapper, mount } from 'enzyme';
-import LoginForm from '../login-form';
-import { debug } from 'console';
 
+import { render, cleanup } from '../../test-utils';
+import LoginForm from '../login-form';
 
 describe('Login Form', () => {
-  let wrapper: ReactWrapper;
-  
-  it('renders without error', () => {
-    const wrapper = shallow(<LoginForm login={() => {}}/>);
-    //const element = wrapper.find("Space Explorer")
-    expect(wrapper.exists()).toBeTruthy()
-    //expect(element.exists()).toBe(true)
-  });
+  // automatically unmount and cleanup DOM after the test is finished.
+  afterEach(cleanup);
 
+  it('renders without error', () => {
+    render(<LoginForm login={() => {}}/>);
+  });
 });
