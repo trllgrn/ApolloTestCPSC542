@@ -1,12 +1,11 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import { MockedProvider } from '@apollo/client/testing'
-
 import {
-  cleanup,
+  renderApollo, cleanup, waitForElement,
 } from '../../test-utils';
 import Launch, { GET_LAUNCH_DETAILS } from '../launch';
-
+import { shallow, mount, render } from 'enzyme';
+import { MockedProvider } from '@apollo/client/testing';
+import { act } from '@testing-library/react';
 const mockLaunch = {
   __typename: 'Launch',
   id: 1,
@@ -26,11 +25,9 @@ const mockLaunch = {
   site: 'earth',
   isInCart: false,
 };
-
 describe('Launch Page', () => {
   // automatically unmount and cleanup DOM after the test is finished.
   afterEach(cleanup);
-
   it('renders launch', async () => {
     const mocks = [
       {
@@ -38,11 +35,11 @@ describe('Launch Page', () => {
         result: { data: { launch: mockLaunch } },
       },
     ];
-    const wrapper = mount(
-      <MockedProvider  mocks={mocks} addTypename={false}>
-          <Launch launchId={1} />
-      </MockedProvider>
-      )
-    expect(wrapper.find("test mission")).toBeTruthy();
+    const wrapper = mount(<MockedProvider mocks={mocks}><Launch /></MockedProvider>);
+      await act(async () => {
+          await new Promise(resolve => setTimeout(resolve, 0));
+          wrapper.update();
+      });
+      expect(wrapper.find({ children: 'test mission' })).toBeTruthy();
   });
 });
